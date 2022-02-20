@@ -13,6 +13,8 @@
 		DF9B6E6D27C293CB009CDCA4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF9B6E6B27C293CB009CDCA4 /* Main.storyboard */; };
 		DF9B6E6F27C293CC009CDCA4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF9B6E6E27C293CC009CDCA4 /* Assets.xcassets */; };
 		DF9B6E7227C293CC009CDCA4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF9B6E7027C293CC009CDCA4 /* LaunchScreen.storyboard */; };
+		DF9B6E7A27C2A802009CDCA4 /* TwitterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9B6E7927C2A802009CDCA4 /* TwitterViewController.swift */; };
+		DF9B6E7C27C2AAD8009CDCA4 /* TwitterAPICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9B6E7B27C2AAD8009CDCA4 /* TwitterAPICaller.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		DF9B6E6E27C293CC009CDCA4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DF9B6E7127C293CC009CDCA4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DF9B6E7327C293CC009CDCA4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DF9B6E7927C2A802009CDCA4 /* TwitterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterViewController.swift; sourceTree = "<group>"; };
+		DF9B6E7B27C2AAD8009CDCA4 /* TwitterAPICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterAPICaller.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +63,8 @@
 				DF9B6E6527C293CB009CDCA4 /* AppDelegate.swift */,
 				DF9B6E6727C293CB009CDCA4 /* SceneDelegate.swift */,
 				DF9B6E6927C293CB009CDCA4 /* ViewController.swift */,
+				DF9B6E7B27C2AAD8009CDCA4 /* TwitterAPICaller.swift */,
+				DF9B6E7927C2A802009CDCA4 /* TwitterViewController.swift */,
 				DF9B6E6B27C293CB009CDCA4 /* Main.storyboard */,
 				DF9B6E6E27C293CC009CDCA4 /* Assets.xcassets */,
 				DF9B6E7027C293CC009CDCA4 /* LaunchScreen.storyboard */,
@@ -138,6 +144,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF9B6E7A27C2A802009CDCA4 /* TwitterViewController.swift in Sources */,
+				DF9B6E7C27C2AAD8009CDCA4 /* TwitterAPICaller.swift in Sources */,
 				DF9B6E6A27C293CB009CDCA4 /* ViewController.swift in Sources */,
 				DF9B6E6627C293CB009CDCA4 /* AppDelegate.swift in Sources */,
 				DF9B6E6827C293CB009CDCA4 /* SceneDelegate.swift in Sources */,
