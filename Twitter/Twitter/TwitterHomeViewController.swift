@@ -24,6 +24,7 @@ class TwitterHomeViewController: UITableViewController {
         
         self.tableView.register(TwitterTableViewCell.self, forCellReuseIdentifier: "TwitterCell")
         self.tableView.rowHeight = UITableView.automaticDimension
+        self.tableView.allowsSelection = false
         
         tableView.refreshControl = UIRefreshControl()
         tableView.refreshControl?.addTarget(self, action: #selector(loadTweets), for: .valueChanged)
@@ -64,14 +65,27 @@ extension TwitterHomeViewController {
         return UITableViewCell()
     }
 
-    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if(indexPath.row + 1 == self.numOfTweet) {
+            loadMoreTweets()
+        }
+    }
 }
 
 //MARK: - Fetch twitter data
 extension TwitterHomeViewController {
     @objc func loadTweets() {
-        let getTwitterTimeURL = "https://api.twitter.com/1.1/statuses/home_timeline.json"
         self.numOfTweet = 15
+        fetchData()
+    }
+    
+    func loadMoreTweets() {
+        self.numOfTweet += 10
+        fetchData()
+    }
+    
+    func fetchData() {
+        let getTwitterTimeURL = "https://api.twitter.com/1.1/statuses/home_timeline.json"
         let parameters = ["count": numOfTweet]
         TwitterAPICaller.client?.getDictionariesRequest(url: getTwitterTimeURL, parameters: parameters, success: { (tweets: [NSDictionary]) in
             self.tweetArray.removeAll()
@@ -83,8 +97,9 @@ extension TwitterHomeViewController {
         }, failure: { error in
             print(error.localizedDescription)
         })
-        
     }
+    
+    
 }
 
 //MARK: - logout functionality
