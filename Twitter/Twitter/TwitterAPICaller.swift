@@ -51,6 +51,7 @@ class TwitterAPICaller: BDBOAuth1SessionManager {
         print(parameters)
         TwitterAPICaller.client?.get(url, parameters: parameters, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
             success(response as! [NSDictionary])
+//            task.resume()
         }, failure: { (task: URLSessionDataTask?, error: Error) in
             failure(error)
         })

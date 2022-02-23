@@ -7,9 +7,13 @@
 //
 
 import UIKit
+import AlamofireImage
 
 
 class TwitterHomeViewController: UITableViewController {
+    
+    var tweetArray = [NSDictionary]()
+    var numOfTweet = Int()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,30 +23,70 @@ class TwitterHomeViewController: UITableViewController {
         setupNavigationBarLeftLogoutButton()
         
         self.tableView.register(TwitterTableViewCell.self, forCellReuseIdentifier: "TwitterCell")
-        self.tableView.rowHeight = 180
-    
+        self.tableView.rowHeight = UITableView.automaticDimension
+        
+        tableView.refreshControl = UIRefreshControl()
+        tableView.refreshControl?.addTarget(self, action: #selector(loadTweets), for: .valueChanged)
+        
+        loadTweets()
     }
 
 }
 
-
-//MARK: - TableViewCell functionality
+//MARK: - TableView Cell functionality
 extension TwitterHomeViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        10
+        return tweetArray.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "TwitterCell") as? TwitterTableViewCell {
+            let tweet = tweetArray[indexPath.row]
+            
+            guard let tweetText = tweet["text"] as? String else {return cell}
+            cell.twitterContentTextview.text = tweetText
+            
+            guard let user = tweet["user"] as? NSDictionary else {return cell}
+            guard let name = user["name"] as? String else {return cell}
+            cell.userNameLable.text = name
+            
+            guard let imageUrlStr = user["profile_image_url_https"] as? String else {return cell}
+            if let url = URL.init(string: imageUrlStr) {
+                cell.userImageView.af_setImage(withURL: url)
+            }
+            
             return cell
         }
         return UITableViewCell()
     }
+
+    
 }
+
+//MARK: - Fetch twitter data
+extension TwitterHomeViewController {
+    @objc func loadTweets() {
+        let getTwitterTimeURL = "https://api.twitter.com/1.1/statuses/home_timeline.json"
+        self.numOfTweet = 15
+        let parameters = ["count": numOfTweet]
+        TwitterAPICaller.client?.getDictionariesRequest(url: getTwitterTimeURL, parameters: parameters, success: { (tweets: [NSDictionary]) in
+            self.tweetArray.removeAll()
+            for tweet in tweets {
+                self.tweetArray.append(tweet)
+            }
+            self.tableView.reloadData()
+            self.tableView.refreshControl?.endRefreshing()
+        }, failure: { error in
+            print(error.localizedDescription)
+        })
+        
+    }
+}
+
 //MARK: - logout functionality
 extension TwitterHomeViewController {
     @objc func logoutTapped(_ sender: UIBarButtonItem) {

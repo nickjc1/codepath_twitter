@@ -23,7 +23,7 @@ class TwitterTableViewCell: UITableViewCell {
         lb.font = .boldSystemFont(ofSize: 20)
         lb.textAlignment = .left
         lb.textColor = .black
-        lb.text = "Chao Jiang"
+//        lb.text = "Chao Jiang"
         return lb
     }()
     
@@ -34,7 +34,7 @@ class TwitterTableViewCell: UITableViewCell {
         tv.textColor = .black
         tv.isUserInteractionEnabled = false
         tv.isScrollEnabled = false
-        tv.text = "Chao Jiang is a good person! Good luck bro!!!"
+//        tv.text = "Chao Jiang is a good person! Good luck bro!!!"
         return tv
     }()
 
@@ -51,14 +51,16 @@ class TwitterTableViewCell: UITableViewCell {
 
 //MARK: - userImageView, userNameLable, userTwitterContent layout configuration
 extension TwitterTableViewCell {
+    
     func userImageViewConfiguration() {
         self.addSubview(userImageView)
         self.userImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             userImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
             userImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
-            userImageView.widthAnchor.constraint(equalToConstant: 100),
-            userImageView.heightAnchor.constraint(equalTo: userImageView.widthAnchor, multiplier: 8/6.0)
+            userImageView.widthAnchor.constraint(equalToConstant: 50),
+            userImageView.heightAnchor.constraint(equalTo: userImageView.widthAnchor),
+            userImageView.bottomAnchor.constraint(lessThanOrEqualTo: self.bottomAnchor, constant: -10)
         ])
     }
     
