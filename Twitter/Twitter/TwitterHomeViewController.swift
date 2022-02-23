@@ -17,9 +17,31 @@ class TwitterHomeViewController: UITableViewController {
         
         setupNavigationBarApperance()
         setupNavigationBarLeftLogoutButton()
+        
+        self.tableView.register(TwitterTableViewCell.self, forCellReuseIdentifier: "TwitterCell")
+        self.tableView.rowHeight = 180
     
     }
 
+}
+
+
+//MARK: - TableViewCell functionality
+extension TwitterHomeViewController {
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        1
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        10
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "TwitterCell") as? TwitterTableViewCell {
+            return cell
+        }
+        return UITableViewCell()
+    }
 }
 //MARK: - logout functionality
 extension TwitterHomeViewController {
