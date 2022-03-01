@@ -16,6 +16,7 @@
 		DF00435627C695F200FEB5A5 /* UserLoginStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF00435527C695F200FEB5A5 /* UserLoginStatus.swift */; };
 		DF00435827C6AA0700FEB5A5 /* TwitterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF00435727C6AA0700FEB5A5 /* TwitterTableViewCell.swift */; };
 		DF53BD2427C5E80F00C180E6 /* TwitterHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF53BD2327C5E80F00C180E6 /* TwitterHomeViewController.swift */; };
+		DF8A357E27CDD87A002BAC5F /* TweetPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF8A357D27CDD87A002BAC5F /* TweetPostViewController.swift */; };
 		DFE6E89E27C4913B0007BBFA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE6E89D27C4913B0007BBFA /* LoginViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +34,7 @@
 		DF00435527C695F200FEB5A5 /* UserLoginStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLoginStatus.swift; sourceTree = "<group>"; };
 		DF00435727C6AA0700FEB5A5 /* TwitterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterTableViewCell.swift; sourceTree = "<group>"; };
 		DF53BD2327C5E80F00C180E6 /* TwitterHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterHomeViewController.swift; sourceTree = "<group>"; };
+		DF8A357D27CDD87A002BAC5F /* TweetPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetPostViewController.swift; sourceTree = "<group>"; };
 		DFE6E89D27C4913B0007BBFA /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -83,6 +85,7 @@
 				6EBCF52521DF07FC00451C03 /* AppDelegate.swift */,
 				DFE6E89D27C4913B0007BBFA /* LoginViewController.swift */,
 				DF53BD2327C5E80F00C180E6 /* TwitterHomeViewController.swift */,
+				DF8A357D27CDD87A002BAC5F /* TweetPostViewController.swift */,
 				DF00435727C6AA0700FEB5A5 /* TwitterTableViewCell.swift */,
 				DF00435527C695F200FEB5A5 /* UserLoginStatus.swift */,
 				6EBCF54321E047A500451C03 /* TwitterAPICaller.swift */,
@@ -215,6 +218,7 @@
 				DFE6E89E27C4913B0007BBFA /* LoginViewController.swift in Sources */,
 				DF53BD2427C5E80F00C180E6 /* TwitterHomeViewController.swift in Sources */,
 				6EBCF54421E047A500451C03 /* TwitterAPICaller.swift in Sources */,
+				DF8A357E27CDD87A002BAC5F /* TweetPostViewController.swift in Sources */,
 				DF00435827C6AA0700FEB5A5 /* TwitterTableViewCell.swift in Sources */,
 				6EBCF52621DF07FC00451C03 /* AppDelegate.swift in Sources */,
 				DF00435627C695F200FEB5A5 /* UserLoginStatus.swift in Sources */,

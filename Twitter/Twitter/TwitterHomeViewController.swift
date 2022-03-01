@@ -19,8 +19,14 @@ class TwitterHomeViewController: UITableViewController {
         super.viewDidLoad()
         self.title = "Home"
         
+        //set up the navigationbar backbutton title in the next view of the navigation stack
+        self.navigationItem.backButtonTitle = "Cancel"
+        //set up the navigationbar all button color
+        self.navigationController?.navigationBar.tintColor = .white
+        
         setupNavigationBarApperance()
         setupNavigationBarLeftLogoutButton()
+        setupNavgationBarRightButton()
         
         self.tableView.register(TwitterTableViewCell.self, forCellReuseIdentifier: "TwitterCell")
         self.tableView.rowHeight = UITableView.automaticDimension
@@ -102,22 +108,22 @@ extension TwitterHomeViewController {
     
 }
 
-//MARK: - logout functionality
+//MARK: - NavigationBarButton Functionality
 extension TwitterHomeViewController {
     @objc func logoutTapped(_ sender: UIBarButtonItem) {
         TwitterAPICaller.client?.logout()
         UserLoggedInStatus.isLogginedIn = false
         self.dismiss(animated: true, completion: nil)
     }
+    
+    @objc func tweetTapped(_ sender: UIBarButtonItem) {
+        let tweetPostViewController = TweetPostViewController()
+        self.navigationController?.pushViewController(tweetPostViewController, animated: true)
+    }
 }
 
 //MARK: - navigationBar and navigationBar button set up
 extension TwitterHomeViewController {
-    
-    func setupNavigationBarLeftLogoutButton() {
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(logoutTapped(_:)))
-        self.navigationItem.leftBarButtonItem?.tintColor = .white
-    }
     
     func setupNavigationBarApperance() {
         if #available(iOS 13.0, *) {
@@ -131,8 +137,19 @@ extension TwitterHomeViewController {
         } else {
             // Fallback on earlier versions
             self.navigationController?.navigationBar.backgroundColor = .white
-            self.navigationItem.titleView?.tintColor = .black
-            self.navigationItem.leftBarButtonItem?.tintColor = .black 
+            self.navigationController?.navigationBar.tintColor = .black
         }
     }
+    
+    func setupNavigationBarLeftLogoutButton() {
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(logoutTapped(_:)))
+//        self.navigationItem.leftBarButtonItem?.tintColor = .white
+    }
+    
+    func setupNavgationBarRightButton() {
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Tweet", style: .plain, target: self, action: #selector(tweetTapped(_:)))
+//        self.navigationItem.rightBarButtonItem?.tintColor = .white
+    }
+    
+    
 }
