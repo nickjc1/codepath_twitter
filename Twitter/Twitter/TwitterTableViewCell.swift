@@ -10,6 +10,9 @@ import UIKit
 
 class TwitterTableViewCell: UITableViewCell {
     
+    var favouriteButtonTapped: ()->() = {}
+    var retweetButtonTapped: ()->() = {}
+    
     let userImageView:UIImageView = {
         let iv = UIImageView()
         iv.backgroundColor = .twitterBlue()
@@ -41,7 +44,8 @@ class TwitterTableViewCell: UITableViewCell {
     let favouriteButton:UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "favor-icon"), for: .normal)
-        button.setTitle("", for: .normal)
+//        button.setTitle("", for: .normal)
+//        button.addTarget(self, action: #selector(favouriteButtonTapped(_:)), for: .touchUpInside)
         return button
     }()
     
@@ -56,6 +60,7 @@ class TwitterTableViewCell: UITableViewCell {
     let retweetButton:UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "retweet-icon"), for: .normal)
+//        button.addTarget(self, action: #selector(retweetButtonTapped(_sender:)), for: .touchUpInside)
         return button
     }()
     
@@ -69,7 +74,15 @@ class TwitterTableViewCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        //use this line to let user be able to access the content(e.g: button inside cell) inside the cell(THE MAGIC CODE!!!)
+        self.contentView.isUserInteractionEnabled = true
+        
         configurateCellLayout()
+        
+        favouriteButton.addTarget(self, action: #selector(favouriteButtonTapped(_:)), for: .touchUpInside)
+        retweetButton.addTarget(self, action: #selector(retweetButtonTapped(_:)), for: .touchUpInside)
+        
     }
     
     required init?(coder: NSCoder) {
@@ -127,6 +140,7 @@ extension TwitterTableViewCell {
 
 //MARK: - favourite button, retweet button layout configuration
 extension TwitterTableViewCell {
+
     func favouriteLayoutConfiguration() {
         self.addSubview(favouriteButton)
         favouriteButton.translatesAutoresizingMaskIntoConstraints = false
@@ -162,7 +176,21 @@ extension TwitterTableViewCell {
             retweetButton.bottomAnchor.constraint(equalTo: retweetNumber.bottomAnchor),
             retweetButton.heightAnchor.constraint(equalTo: favouriteButton.heightAnchor),
             retweetButton.widthAnchor.constraint(equalTo: retweetButton.heightAnchor)
-            
         ])
+    }
+}
+
+extension TwitterTableViewCell{
+    @objc func favouriteButtonTapped(_ sender: Any?) {
+        print("favouriteButton tapped")
+    }
+    
+    @objc func retweetButtonTapped(_ sender: Any?) {
+        print("retweetbuttonTapped")
+    }
+    
+    func setupButtonFuncionality() {
+        favouriteButton.addTarget(self, action: #selector(favouriteButtonTapped(_:)), for: .touchUpInside)
+        retweetButton.addTarget(self, action: #selector(retweetButtonTapped(_:)), for: .touchUpInside)
     }
 }
