@@ -8,14 +8,26 @@
 
 import UIKit
 
-protocol TwitterTableViewCellDelegate {
-    func favouriteButtonTapped()
-    func retweetButtonTapped()
-}
-
 class TwitterTableViewCell: UITableViewCell {
     
-    var delegate: TwitterTableViewCellDelegate?
+    private var favorited: Bool?
+    //use this compute variable to initialize the favouriteButton image when the cell appear
+    var isFavourite: Bool? {
+        get {
+            return favorited
+        }
+        set {
+            if(newValue!) {
+                self.favouriteButton.setImage(UIImage(named: "favor-icon-red"), for: .normal)
+                favorited = true
+            } else {
+                favouriteButton.setImage(UIImage(named: "favor-icon"), for: .normal)
+                favorited = false
+            }
+        }
+    }
+    
+    var tweetId: Int = -1
     
 //MARK: - Cell contents
     let userImageView:UIImageView = {
@@ -184,10 +196,17 @@ extension TwitterTableViewCell {
 //MARK: - Cell button functionality
 extension TwitterTableViewCell{
     @objc func favouriteButtonTapped(_ sender: Any?) {
-        delegate?.favouriteButtonTapped()
+        guard let isFavor = self.favorited else {return}
+        let urlStr = isFavor ? "https://api.twitter.com/1.1/favorites/destroy.json" : "https://api.twitter.com/1.1/favorites/create.json"
+        TwitterAPICaller.client?.post(urlStr, parameters: ["id": self.tweetId], progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
+            self.isFavourite = !isFavor
+        }, failure: { (task, error) in
+            print("post favourite failed with error: \(error)")
+        })
     }
     
     @objc func retweetButtonTapped(_ sender: Any?) {
-        delegate?.retweetButtonTapped()
     }
 }
+
+

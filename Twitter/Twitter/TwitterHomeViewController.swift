@@ -9,11 +9,12 @@
 import UIKit
 import AlamofireImage
 
-
 class TwitterHomeViewController: UITableViewController {
     
     var tweetArray = [NSDictionary]()
     var numOfTweet = Int()
+    
+    var test:Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,7 +58,6 @@ extension TwitterHomeViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "TwitterCell") as? TwitterTableViewCell {
-            cell.delegate = self
             
             let tweet = tweetArray[indexPath.row]
 
@@ -73,13 +73,16 @@ extension TwitterHomeViewController {
                 cell.userImageView.af_setImage(withURL: url)
             }
             
+            guard let favorited = tweet["favorited"] as? Bool else {return cell}
+            cell.isFavourite = favorited
+            
+            guard let tweetId = tweet["id"] as? Int else {return cell}
+            cell.tweetId = tweetId
+//            print(tweetId)
+            
             return cell
         }
         return UITableViewCell()
-//        if let cell = tableView.dequeueReusableCell(withIdentifier: "TwitterCell") as? TwitterTableViewCell {
-//            return cell
-//        }
-//        return UITableViewCell()
     }
 
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -163,14 +166,3 @@ extension TwitterHomeViewController {
 }
 
 
-//MARK: - comform TwitterTableCellDelegate protocol
-extension TwitterHomeViewController: TwitterTableViewCellDelegate {
-    func favouriteButtonTapped() {
-        print("tapped favourite")
-    }
-    
-    func retweetButtonTapped() {
-        print("tapped retweet")
-    }
-
-}
