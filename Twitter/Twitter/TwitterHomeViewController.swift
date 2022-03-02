@@ -56,35 +56,40 @@ extension TwitterHomeViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tweetArray.count
+//        return tweetArray.count
+        return 15
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        if let cell = tableView.dequeueReusableCell(withIdentifier: "TwitterCell") as? TwitterTableViewCell {
+//            let tweet = tweetArray[indexPath.row]
+//
+//            guard let tweetText = tweet["text"] as? String else {return cell}
+//            cell.twitterContentTextview.text = tweetText
+//
+//            guard let user = tweet["user"] as? NSDictionary else {return cell}
+//            guard let name = user["name"] as? String else {return cell}
+//            cell.userNameLable.text = name
+//
+//            guard let imageUrlStr = user["profile_image_url_https"] as? String else {return cell}
+//            if let url = URL.init(string: imageUrlStr) {
+//                cell.userImageView.af_setImage(withURL: url)
+//            }
+//
+//            return cell
+//        }
+//        return UITableViewCell()
         if let cell = tableView.dequeueReusableCell(withIdentifier: "TwitterCell") as? TwitterTableViewCell {
-            let tweet = tweetArray[indexPath.row]
-            
-            guard let tweetText = tweet["text"] as? String else {return cell}
-            cell.twitterContentTextview.text = tweetText
-            
-            guard let user = tweet["user"] as? NSDictionary else {return cell}
-            guard let name = user["name"] as? String else {return cell}
-            cell.userNameLable.text = name
-            
-            guard let imageUrlStr = user["profile_image_url_https"] as? String else {return cell}
-            if let url = URL.init(string: imageUrlStr) {
-                cell.userImageView.af_setImage(withURL: url)
-            }
-            
             return cell
         }
         return UITableViewCell()
     }
 
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if(indexPath.row + 1 == self.numOfTweet) {
-            loadMoreTweets()
-        }
-    }
+//    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        if(indexPath.row + 1 == self.numOfTweet) {
+//            loadMoreTweets()
+//        }
+//    }
 }
 
 //MARK: - Fetch twitter data
