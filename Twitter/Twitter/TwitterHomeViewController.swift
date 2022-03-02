@@ -38,6 +38,15 @@ class TwitterHomeViewController: UITableViewController {
         loadTweets()
     }
 
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        self.loadTweets()
+//    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.loadTweets()
+    }
 }
 
 //MARK: - TableView Cell functionality
