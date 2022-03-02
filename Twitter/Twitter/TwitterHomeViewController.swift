@@ -57,6 +57,7 @@ extension TwitterHomeViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "TwitterCell") as? TwitterTableViewCell {
+            cell.delegate = self
             
             let tweet = tweetArray[indexPath.row]
 
@@ -72,13 +73,6 @@ extension TwitterHomeViewController {
                 cell.userImageView.af_setImage(withURL: url)
             }
             
-//            cell.favouriteButtonTapped = {
-//                print("favourite Button Tapped")
-//            }
-//            cell.retweetButtonTapped = {
-//                print("retweet button tapped")
-//            }
-
             return cell
         }
         return UITableViewCell()
@@ -166,4 +160,17 @@ extension TwitterHomeViewController {
 //        self.navigationItem.rightBarButtonItem?.tintColor = .white
     }
     
+}
+
+
+//MARK: - comform TwitterTableCellDelegate protocol
+extension TwitterHomeViewController: TwitterTableViewCellDelegate {
+    func favouriteButtonTapped() {
+        print("tapped favourite")
+    }
+    
+    func retweetButtonTapped() {
+        print("tapped retweet")
+    }
+
 }

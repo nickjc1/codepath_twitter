@@ -8,11 +8,16 @@
 
 import UIKit
 
+protocol TwitterTableViewCellDelegate {
+    func favouriteButtonTapped()
+    func retweetButtonTapped()
+}
+
 class TwitterTableViewCell: UITableViewCell {
     
-    var favouriteButtonTapped: ()->() = {}
-    var retweetButtonTapped: ()->() = {}
+    var delegate: TwitterTableViewCellDelegate?
     
+//MARK: - Cell contents
     let userImageView:UIImageView = {
         let iv = UIImageView()
         iv.backgroundColor = .twitterBlue()
@@ -45,7 +50,7 @@ class TwitterTableViewCell: UITableViewCell {
         let button = UIButton()
         button.setImage(UIImage(named: "favor-icon"), for: .normal)
 //        button.setTitle("", for: .normal)
-//        button.addTarget(self, action: #selector(favouriteButtonTapped(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(favouriteButtonTapped(_:)), for: .touchUpInside)
         return button
     }()
     
@@ -60,7 +65,7 @@ class TwitterTableViewCell: UITableViewCell {
     let retweetButton:UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "retweet-icon"), for: .normal)
-//        button.addTarget(self, action: #selector(retweetButtonTapped(_sender:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(retweetButtonTapped(_:)), for: .touchUpInside)
         return button
     }()
     
@@ -71,7 +76,7 @@ class TwitterTableViewCell: UITableViewCell {
         lb.font = .systemFont(ofSize: 15)
         return lb
     }()
-
+//MARK: - initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -79,15 +84,16 @@ class TwitterTableViewCell: UITableViewCell {
         self.contentView.isUserInteractionEnabled = true
         
         configurateCellLayout()
-        
-        favouriteButton.addTarget(self, action: #selector(favouriteButtonTapped(_:)), for: .touchUpInside)
-        retweetButton.addTarget(self, action: #selector(retweetButtonTapped(_:)), for: .touchUpInside)
-        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+}
+
+//MARK: - userImageView, userNameLable, userTwitterContent layout configuration
+extension TwitterTableViewCell {
     
     func configurateCellLayout() {
         userImageViewConfiguration()
@@ -97,11 +103,6 @@ class TwitterTableViewCell: UITableViewCell {
         favouriteLayoutConfiguration()
         retweetLayoutConfiguration()
     }
-    
-}
-
-//MARK: - userImageView, userNameLable, userTwitterContent layout configuration
-extension TwitterTableViewCell {
     
     func userImageViewConfiguration() {
         self.addSubview(userImageView)
@@ -180,17 +181,13 @@ extension TwitterTableViewCell {
     }
 }
 
+//MARK: - Cell button functionality
 extension TwitterTableViewCell{
     @objc func favouriteButtonTapped(_ sender: Any?) {
-        print("favouriteButton tapped")
+        delegate?.favouriteButtonTapped()
     }
     
     @objc func retweetButtonTapped(_ sender: Any?) {
-        print("retweetbuttonTapped")
-    }
-    
-    func setupButtonFuncionality() {
-        favouriteButton.addTarget(self, action: #selector(favouriteButtonTapped(_:)), for: .touchUpInside)
-        retweetButton.addTarget(self, action: #selector(retweetButtonTapped(_:)), for: .touchUpInside)
+        delegate?.retweetButtonTapped()
     }
 }
