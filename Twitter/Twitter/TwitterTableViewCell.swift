@@ -15,7 +15,8 @@ protocol TwitterTableViewCellDelegate {
 class TwitterTableViewCell: UITableViewCell {
     
     var delegate: TwitterTableViewCellDelegate?
-    
+
+//MARK: - boolean variables for favoriteButton and retweetButton
     private var favorited: Bool?
     //use this compute variable to initialize the favouriteButton image when the cell appear
     var isFavourite: Bool? {

@@ -101,12 +101,12 @@ extension TwitterHomeViewController {
 //MARK: - Fetch twitter data
 extension TwitterHomeViewController {
     @objc func loadTweets() {
-        self.numOfTweet = 15
+        self.numOfTweet = 8
         fetchData()
     }
     
     func loadMoreTweets() {
-        self.numOfTweet += 10
+        self.numOfTweet += 5
         fetchData()
     }
     
