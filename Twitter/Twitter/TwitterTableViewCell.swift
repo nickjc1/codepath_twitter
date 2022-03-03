@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol TwitterTableViewCellDelegate {
+    func refreshTweets()
+}
+
 class TwitterTableViewCell: UITableViewCell {
+    
+    var delegate: TwitterTableViewCellDelegate?
     
     private var favorited: Bool?
     //use this compute variable to initialize the favouriteButton image when the cell appear
@@ -19,10 +25,26 @@ class TwitterTableViewCell: UITableViewCell {
         set {
             if(newValue!) {
                 self.favouriteButton.setImage(UIImage(named: "favor-icon-red"), for: .normal)
-                favorited = true
             } else {
                 favouriteButton.setImage(UIImage(named: "favor-icon"), for: .normal)
-                favorited = false
+            }
+            self.favorited = newValue
+        }
+    }
+    
+    private var retweeted: Bool?
+    var isRetweeted: Bool? {
+        get {
+            return retweeted
+        }
+        set {
+            retweeted = newValue
+            if(newValue!) {
+                self.retweetButton.setImage(UIImage(named: "retweet-icon-green"), for: .normal)
+                retweetButton.isEnabled = false
+            } else {
+                self.retweetButton.setImage(UIImage(named: "retweet-icon"), for: .normal)
+                retweetButton.isEnabled = true
             }
         }
     }
@@ -77,6 +99,7 @@ class TwitterTableViewCell: UITableViewCell {
     let retweetButton:UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "retweet-icon"), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
         button.addTarget(self, action: #selector(retweetButtonTapped(_:)), for: .touchUpInside)
         return button
     }()
@@ -161,13 +184,14 @@ extension TwitterTableViewCell {
         favouriteNumber.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            favouriteNumber.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            favouriteNumber.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -5),
             favouriteNumber.heightAnchor.constraint(equalToConstant: 25),
-            favouriteNumber.widthAnchor.constraint(equalTo: favouriteNumber.heightAnchor, multiplier: 1.3),
+            favouriteNumber.widthAnchor.constraint(equalTo: favouriteNumber.heightAnchor, multiplier: 1.7),
             favouriteNumber.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             
             favouriteButton.trailingAnchor.constraint(equalTo: favouriteNumber.leadingAnchor),
-            favouriteButton.bottomAnchor.constraint(equalTo: favouriteNumber.bottomAnchor),
+            favouriteButton.centerYAnchor.constraint(equalTo: favouriteNumber.centerYAnchor),
+//            favouriteButton.bottomAnchor.constraint(equalTo: favouriteNumber.bottomAnchor),
             favouriteButton.heightAnchor.constraint(equalTo: favouriteNumber.heightAnchor),
             favouriteButton.widthAnchor.constraint(equalTo: favouriteButton.heightAnchor)
         ])
@@ -183,7 +207,7 @@ extension TwitterTableViewCell {
             retweetNumber.trailingAnchor.constraint(equalTo: favouriteButton.leadingAnchor),
             retweetNumber.bottomAnchor.constraint(equalTo: favouriteButton.bottomAnchor),
             retweetNumber.heightAnchor.constraint(equalTo: favouriteNumber.heightAnchor),
-            retweetNumber.widthAnchor.constraint(equalTo: retweetNumber.heightAnchor, multiplier: 1.3),
+            retweetNumber.widthAnchor.constraint(equalTo: retweetNumber.heightAnchor, multiplier: 1.5),
             
             retweetButton.trailingAnchor.constraint(equalTo: retweetNumber.leadingAnchor),
             retweetButton.bottomAnchor.constraint(equalTo: retweetNumber.bottomAnchor),
@@ -200,12 +224,23 @@ extension TwitterTableViewCell{
         let urlStr = isFavor ? "https://api.twitter.com/1.1/favorites/destroy.json" : "https://api.twitter.com/1.1/favorites/create.json"
         TwitterAPICaller.client?.post(urlStr, parameters: ["id": self.tweetId], progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
             self.isFavourite = !isFavor
+            self.delegate?.refreshTweets()
         }, failure: { (task, error) in
             print("post favourite failed with error: \(error)")
         })
     }
     
     @objc func retweetButtonTapped(_ sender: Any?) {
+//        guard let isRetwed = self.retweeted else {return}
+        let urlStr = "https://api.twitter.com/1.1/statuses/retweet/\(self.tweetId).json"
+        TwitterAPICaller.client?.post(urlStr, parameters: ["id": self.tweetId], progress: nil, success: {
+            (task, response)in
+            self.isRetweeted = true
+            self.delegate?.refreshTweets()
+        }, failure: {
+            (task, error) in
+            print("Encounter retweet error: \(error)")
+        })
     }
 }
 

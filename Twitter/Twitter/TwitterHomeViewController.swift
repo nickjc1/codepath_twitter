@@ -58,7 +58,7 @@ extension TwitterHomeViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "TwitterCell") as? TwitterTableViewCell {
-            
+            cell.delegate = self
             let tweet = tweetArray[indexPath.row]
 
             guard let tweetText = tweet["text"] as? String else {return cell}
@@ -73,12 +73,18 @@ extension TwitterHomeViewController {
                 cell.userImageView.af_setImage(withURL: url)
             }
             
-            guard let favorited = tweet["favorited"] as? Bool else {return cell}
-            cell.isFavourite = favorited
-            
             guard let tweetId = tweet["id"] as? Int else {return cell}
             cell.tweetId = tweetId
-//            print(tweetId)
+            
+            guard let favorited = tweet["favorited"] as? Bool else {return cell}
+            cell.isFavourite = favorited
+            guard let favoritedCount = tweet["favorite_count"] as? Int else {return cell}
+            cell.favouriteNumber.text = String(favoritedCount)
+            
+            guard let retweeted = tweet["retweeted"] as? Bool else {return cell}
+            cell.isRetweeted = retweeted
+            guard let retweetedCount = tweet["retweet_count"] as? Int else {return cell}
+            cell.retweetNumber.text = String(retweetedCount)
             
             return cell
         }
@@ -165,4 +171,9 @@ extension TwitterHomeViewController {
     
 }
 
+extension TwitterHomeViewController: TwitterTableViewCellDelegate {
+    func refreshTweets() {
+        fetchData()
+    }
+}
 
